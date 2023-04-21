@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "music"
+version = "0.1.0"
+description = ""
+authors = ["Alexey Dashko <alex.vipers@mail.ru>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+tgmount = "^1.0.4"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

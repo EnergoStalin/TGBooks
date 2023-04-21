@@ -1,0 +1,5 @@
+*.session*
+.last
+config.yaml
+Books
+.env
