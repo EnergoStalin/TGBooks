@@ -1,4 +1,4 @@
-# Powered by [tgmount-ng](https://github.com/nktknshn/tgmount-ng)
+# Powered by [tgmount-ng](https://github.com/nktknshn/tgmount-ng) and [rsync](https://github.com/WayneD/rsync)
 
 # Examples
 ## config.yaml
@@ -36,7 +36,7 @@ sudo apt install rsync
 ```
 
 # Run
-This will install all dependencies(python3.10,rsync,poetry,libfuse3) and prepare suite you still need to login manually into tgmount
+This will install all dependencies(python3.10,rsync,poetry,libfuse3) and prepare suite initing .last timestamp
 ```bash
 bash install.sh
 ```
