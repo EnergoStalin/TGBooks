@@ -25,7 +25,13 @@ find . -type f -newermt "$date_str" -print0 |
       "${DASH_E[@]}" \
       "$PWD" \
       "$DESTINATION"
+code=$?
 cd -
-echo $timestamp > .last
+if [ $code -eq 0 ]; then
+  echo "Saving timestamp $timestamp"
+  echo $timestamp > .last
+else
+  echo "Transmitting error timestamp($timestamp) not saved"
+fi
 
 fusermount -u Books
