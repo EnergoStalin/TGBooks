@@ -2,7 +2,7 @@ version: "3.9"
 services:
   audiobookshelf:
     image: ghcr.io/energostalin/audiobook-tg:latest
-    env_file: .env
+    # env_file: .env # uncomment to use
     build:
       context: .
       cache_from:
