@@ -1,5 +1,6 @@
 *.session*
-.last
 config.yaml
-Books
+books
+metadata
+config
 .env

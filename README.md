@@ -1,6 +1,10 @@
-# Powered by [tgmount-ng](https://github.com/nktknshn/tgmount-ng) and [rsync](https://github.com/WayneD/rsync)
+# Powered by [tgmount-ng](https://github.com/nktknshn/tgmount-ng) and [audiobookshelf](https://github.com/advplyr/audiobookshelf)
 
-# Examples
+# First step
+- Run init.sh and make shure fuse installed
+- Install tgmount-ng and login using it saving session into tgfs.session file or use container to do so firstly running init.sh to create empty tgfs.session
+
+# Config examples
 ## config.yaml
 ```yaml
 # can be overwritten by --mount-dir argument
@@ -26,21 +30,6 @@ root:
 ```dotenv
 TGAPP=<app_id>:<app_hash>
 TGSESSION=tgfs
-DESTINATION='u0_a478@192.168.2.193:storage/shared/Audiobooks/'
-DASH_E=(-e "ssh -p 8022")
-```
 
-# Requirements
-```bash
-sudo apt install rsync
-```
-
-# Run
-This will install all dependencies(python3.10,rsync,poetry,libfuse3) and prepare suite initing .last timestamp
-```bash
-bash install.sh
-```
-This script will sync files newer than .last timestamp from Books directory with remote path. Remote can be specified via DESTINATION env var.
-```bash
-bash sync.sh
+DOMAIN=your.domain.ru
 ```

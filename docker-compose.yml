@@ -1,0 +1,50 @@
+version: "3.9"
+services:
+  audiobookshelf:
+    image: ghcr.io/energostalin/audiobook-tg:latest
+    env_file: .env
+    build:
+      context: .
+      cache_from:
+        - ghcr.io/energostalin/audiobook-tg:latest
+      tags:
+        - ghcr.io/energostalin/audiobook-tg:${RELEASE_VERSION-0}
+        - ghcr.io/energostalin/audiobook-tg:latest
+      x-bake:
+        platforms:
+          - linux/amd64
+          - linux/arm64
+    cap_add:
+      - SYS_ADMIN
+    devices:
+      - /dev/fuse:/dev/fuse:rwm
+    security_opt:
+      - apparmor:unconfined
+    volumes:
+      - ./metadata:/metadata
+      - ./config:/config
+
+      - ./config.yaml:/config.yaml
+      - ./tgfs.session:/tgfs.session
+    labels:
+      # watchtower
+      com.centurylinklabs.watchtower.enable: true
+
+      # traefik
+      traefik.enable: true
+      traefik.docker.network: traefik
+      # https
+      traefik.http.routers.audiobookshelf.rule: Host(`audiobook.${DOMAIN}`)
+      traefik.http.routers.audiobookshelf.entrypoints: https
+      traefik.http.routers.audiobookshelf.tls: true
+      traefik.http.routers.audiobookshelf.tls.certResolver: cloudflare
+      raefik.http.routers.audiobookshelf.tls.domains[0].main: audiobook.${DOMAIN}
+      traefik.http.routers.audiobookshelf.service: audiobookshelf
+      # service
+      traefik.http.services.audiobookshelf.loadbalancer.server.port: 80
+    networks:
+      - traefik
+
+networks:
+  traefik:
+    external: true
