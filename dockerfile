@@ -4,6 +4,7 @@ RUN apk add --update --no-cache python3 python3-dev musl-dev linux-headers fuse3
 RUN python3 -m ensurepip
 RUN pip3 install --no-cache --upgrade pip setuptools tgmount
 
+LABEL org.opencontainers.image.source https://github.com/energostalin/TGBooks
 
 USER root
 COPY ./entrypoint.sh /entrypoint.sh
