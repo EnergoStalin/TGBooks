@@ -26,6 +26,7 @@ services:
 
       - ./config.yaml:/config.yaml
       - ./tgfs.session:/tgfs.session
+    restart: unless-stopped
     labels:
       # watchtower
       com.centurylinklabs.watchtower.enable: true
