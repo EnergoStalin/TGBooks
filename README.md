@@ -1,7 +1,7 @@
 # Powered by [tgmount-ng](https://github.com/nktknshn/tgmount-ng) and [audiobookshelf](https://github.com/advplyr/audiobookshelf)
 
 # First step
-- Run init.sh and make shure fuse installed
+- Run init.sh and make sure fuse installed
 - Install tgmount-ng and login using it saving session into tgfs.session file or use container to do so firstly running init.sh to create empty tgfs.session
 
 # Config examples
