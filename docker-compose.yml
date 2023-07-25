@@ -1,8 +1,8 @@
 version: "3.9"
 services:
-  audiobookshelf:
+  tgmount:
     image: ghcr.io/energostalin/audiobook-tg:latest
-    # env_file: .env # uncomment to use
+    env_file: .env # uncomment to use
     build:
       context: .
       cache_from:
@@ -17,35 +17,40 @@ services:
     cap_add:
       - SYS_ADMIN
     devices:
-      - /dev/fuse:/dev/fuse:rwm
+      - /dev/fuse:/dev/fuse:rw
     security_opt:
       - apparmor:unconfined
     volumes:
-      - ./metadata:/metadata
-      - ./config:/config
+      - type: volume
+        source: book
+        target: /audiobooks
+        bind:
+          propagation: rshared
 
       - ./config.yaml:/config.yaml
       - ./tgfs.session:/tgfs.session
     restart: unless-stopped
-    labels:
-      # watchtower
-      com.centurylinklabs.watchtower.enable: true
 
-      # traefik
-      traefik.enable: true
-      traefik.docker.network: traefik
-      # https
-      traefik.http.routers.audiobookshelf.rule: Host(`audiobook.${DOMAIN}`)
-      traefik.http.routers.audiobookshelf.entrypoints: https
-      traefik.http.routers.audiobookshelf.tls: true
-      traefik.http.routers.audiobookshelf.tls.certResolver: cloudflare
-      raefik.http.routers.audiobookshelf.tls.domains[0].main: audiobook.${DOMAIN}
-      traefik.http.routers.audiobookshelf.service: audiobookshelf
-      # service
-      traefik.http.services.audiobookshelf.loadbalancer.server.port: 80
-    networks:
-      - traefik
+  audiobookshelf:
+    image: ghcr.io/advplyr/audiobookshelf:edge
+    cap_add:
+      - SYS_ADMIN
+    devices:
+      - /dev/fuse:/dev/fuse:rw
+    security_opt:
+      - apparmor:unconfined
+    volumes:
+      - type: volume
+        source: book
+        target: /audiobooks
+        bind:
+          propagation: rshared
 
-networks:
-  traefik:
-    external: true
+      - ./metadata:/metadata
+      - ./config:/config
+    ports:
+      - 80:80
+    depends_on:
+      tgmount:
+        condition: service_healthy
+    restart: unless-stopped
